@@ -45,6 +45,10 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
+" source project local configs (securely)
+set exrc
+set secure
+
 " misc settings
 set number
 set showmatch
