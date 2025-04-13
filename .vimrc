@@ -52,8 +52,6 @@ set secure
 " misc settings
 set number
 set showmatch
-set cursorline
 set encoding=utf8
 set ffs=unix,dos,mac
-colorscheme lunaperche
 inoremap jk <ESC>
