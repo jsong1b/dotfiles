@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+# this is a script to create / manage / run other scripts that filter stdin and
+# return to stdout
+
+
+import os
+import sys
+
+
+def main():
+    if len(sys.argv) < 2:
+        msg = (
+            'ERROR: fltr: no arguments passed\n\n'
+            'usage:\n'
+            '  fltr [command]? [filter]\n\n'
+            '  commands:\n'
+            '    run    - run a fltr named [filter]\n'
+            '             this is the default when no command is passed\n'
+            '    create - create a new fltr named [filter]\n'
+            '    list   - lists out all the filters\n'
+            '    edit   - edit a fltr named [filter]\n'
+            '    remove - remove a fltr named [filter]\n'
+        )
+        print(msg, file = sys.stderr)
+        sys.exit(1)
+
+    # check stdin
+    stdin = None
+    if not sys.stdin.isatty():
+        stdin = []
+        for line in sys.stdin: stdin += [line.rstrip()]
+
+    match sys.argv[1]:
+        case 'list':
+            (err, fltrs) = list_fltrs(sys.argv[1:])
+            if err:
+                msg = (
+                    f'ERROR: fltr list: {fltrs}\n\n'
+                    'usage:\n'
+                    '  fltr list\n\n'
+                    '  lists out all of the fltr scripts\n'
+                )
+                print(msg, file = sys.stderr)
+                sys.exit(err)
+
+            if len(fltrs) < 1:
+                print('fltr list: no files found in ~/.scripts/filters')
+            else:
+                for fltr in fltrs: print(fltr)
+
+            sys.exit(0)
+
+        case 'create': create_fltr()
+        case 'edit': edit_fltr()
+        case 'remove': remove_fltr()
+        case 'run': run_fltr()
+        case _: run_fltr()
+
+
+def list_fltrs(args):
+    if len(args) > 1: return (1, f'unknown extra arguments: {args[1:]}')
+    try: files = os.listdir(os.path.expanduser('~/.scripts/filters'))
+    except OSError as e: return(e.errno, f'{str(e)}')
+    except Exception as e: return(1, f'{str(e)}')
+    return (False, files)
+
+
+def create_fltr(): pass
+def edit_fltr(): pass
+def remove_fltr(): pass
+def run_fltr(): pass
+
+
+if __name__ == '__main__':
+    main()

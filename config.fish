@@ -5,6 +5,10 @@ if test -d ~/.local/bin
     fish_add_path ~/.local/bin
 end
 
+if test -d ~/.scripts
+    fish_add_path ~/.scripts
+end
+
 # coreutil aliases
 alias ll   "ls -l"
 alias la   "ls -lA"
