@@ -31,3 +31,6 @@ alias gco "git checkout"
 alias gp  "git push"
 alias gpl "git pull"
 alias glg "git log --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)<%an> %Cgreen(%cr)%Creset %s%C(yellow)%d%Creset' --abbrev-commit"
+
+# environment variables
+set -Ux EDITOR vim
