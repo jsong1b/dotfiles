@@ -45,7 +45,7 @@ def main():
                 sys.exit(err)
 
             if len(fltrs) < 1:
-                print('fltr list: no files found in ~/.scripts/filters')
+                print('fltr list: no fltrs found in ~/.scripts/filters')
             else:
                 for fltr in fltrs: print(fltr)
 
@@ -66,7 +66,21 @@ def main():
 
             sys.exit(0)
 
-        case 'edit': edit_fltr()
+        case 'edit':
+            (err, err_msg) = edit_fltr(sys.argv[1:])
+            if err:
+                msg = (
+                    f'ERROR: fltr edit: {err_msg}\n\n'
+                    'usage:\n'
+                    '  fltr edit [filter] [editor]?\n'
+                    '  opens the file for [filter] in [editor]\n'
+                    '  the default command for [editor] is whatever $EDITOR is'
+                )
+                print(msg, file = sys.stderr)
+                sys.exit(err)
+
+            sys.exit(0)
+
         case 'remove': remove_fltr()
         case 'run': run_fltr()
         case _: run_fltr()
@@ -87,6 +101,8 @@ def create_fltr(args):
     if err: return(err, fltrs)
     if args[1] in fltrs: return(17, f'fltr "{args[1]}" already exists')
 
+    if args[1] in ['run', 'list', 'create', 'edit', 'remove']: return(1, 'cannot use command name as name for fltr')
+
     editor = '$EDITOR'
     if len(args) == 3: editor = args[2]
 
@@ -96,7 +112,20 @@ def create_fltr(args):
 
     return (None, None)
 
-def edit_fltr(): pass
+
+def edit_fltr(args):
+    if len(args) < 2: return(1, f'no fltr name specified')
+    if len(args) > 3: return(1, f'unknown extra arguments: {args[1:]}')
+    (err, fltrs) = list_fltrs([])
+    if err: return(err, fltrs)
+    if args[1] not in fltrs: return(2, f'fltr "{args[1]}" does not exist')
+
+    editor = '$EDITOR'
+    if len(args) == 3: editor = args[2]
+    os.system(f'{editor} ~/.scripts/filters/{args[1]}')
+
+    return (None, None)
+
 def remove_fltr(): pass
 def run_fltr(): pass
 
