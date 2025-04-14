@@ -81,7 +81,20 @@ def main():
 
             sys.exit(0)
 
-        case 'remove': remove_fltr()
+        case 'remove':
+            (err, err_msg) = remove_fltr(sys.argv[1:])
+            if err:
+                msg = (
+                    f'ERROR: fltr remove: {err_msg}\n\n'
+                    'usage:\n'
+                    '  fltr remove [filter]\n'
+                    '  deletes the file for [filter]\n'
+                )
+                print(msg, file = sys.stderr)
+                sys.exit(err)
+
+            sys.exit(0)
+
         case 'run': run_fltr()
         case _: run_fltr()
 
@@ -126,7 +139,21 @@ def edit_fltr(args):
 
     return (None, None)
 
-def remove_fltr(): pass
+
+def remove_fltr(args):
+    if len(args) < 2: return(1, f'no fltr name specified')
+    if len(args) > 2: return(1, f'unknown extra arguments: {args[1:]}')
+    (err, fltrs) = list_fltrs([])
+    if err: return(err, fltrs)
+    if args[1] not in fltrs: return(2, f'fltr "{args[1]}" does not exist')
+
+    confirm = input(f'fltr remove: delete the filter "{args[1]}"? ')
+    if confirm.lower() not in ['y', 'ye', 'yes']: return(None, None)
+    os.system(f'rm ~/.scripts/filters/{args[1]}')
+
+    return (None, None)
+
+
 def run_fltr(): pass
 
 
