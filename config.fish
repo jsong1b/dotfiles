@@ -34,3 +34,8 @@ alias glg "git log --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)<%an> 
 
 # environment variables
 set -Ux EDITOR vim
+
+# misc settings
+if type -q zoxide
+    zoxide init fish | source
+end
