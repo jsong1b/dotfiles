@@ -5,6 +5,7 @@
 
 
 import os
+import subprocess
 import sys
 
 
@@ -26,10 +27,9 @@ def main():
         sys.exit(1)
 
     # check stdin
-    stdin = None
+    stdin = ''
     if not sys.stdin.isatty():
-        stdin = []
-        for line in sys.stdin: stdin += [line.rstrip()]
+        for line in sys.stdin: stdin += line
 
     match sys.argv[1]:
         case 'list':
@@ -95,8 +95,22 @@ def main():
 
             sys.exit(0)
 
-        case 'run': run_fltr()
-        case _: run_fltr()
+        case _:
+            run_args = sys.argv[1:]
+            if sys.argv[1] != 'run': run_args = ['run'] + run_args
+
+            (err, err_msg) = run_fltr(run_args, stdin)
+            if err:
+                msg = (
+                    f'ERROR: fltr run: {err_msg}\n\n'
+                    'usage:\n'
+                    '  fltr run [filter] [args]*\n'
+                    '  executes [filter], passing in `stdin` as well as any additional arguments in [args]\n'
+                )
+                print(msg, file = sys.stderr)
+                sys.exit(err)
+
+            sys.exit(0)
 
 
 def list_fltrs(args):
@@ -110,6 +124,7 @@ def list_fltrs(args):
 def create_fltr(args):
     if len(args) < 2: return(1, f'no fltr name specified')
     if len(args) > 3: return(1, f'unknown extra arguments: {args[1:]}')
+
     (err, fltrs) = list_fltrs([])
     if err: return(err, fltrs)
     if args[1] in fltrs: return(17, f'fltr "{args[1]}" already exists')
@@ -129,6 +144,7 @@ def create_fltr(args):
 def edit_fltr(args):
     if len(args) < 2: return(1, f'no fltr name specified')
     if len(args) > 3: return(1, f'unknown extra arguments: {args[1:]}')
+
     (err, fltrs) = list_fltrs([])
     if err: return(err, fltrs)
     if args[1] not in fltrs: return(2, f'fltr "{args[1]}" does not exist')
@@ -143,6 +159,7 @@ def edit_fltr(args):
 def remove_fltr(args):
     if len(args) < 2: return(1, f'no fltr name specified')
     if len(args) > 2: return(1, f'unknown extra arguments: {args[1:]}')
+
     (err, fltrs) = list_fltrs([])
     if err: return(err, fltrs)
     if args[1] not in fltrs: return(2, f'fltr "{args[1]}" does not exist')
@@ -154,7 +171,16 @@ def remove_fltr(args):
     return (None, None)
 
 
-def run_fltr(): pass
+def run_fltr(args, stdin):
+    if len(args) < 2: return(1, f'no fltr name specified')
+
+    (err, fltrs) = list_fltrs([])
+    if err: return(err, fltrs)
+    if args[1] not in fltrs: return(2, f'fltr "{args[1]}" does not exist')
+
+    subprocess.run(os.path.expanduser(f'~/.scripts/filters/{args[1]}'), input = str.encode(stdin))
+
+    return (None, None)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+# capitalize the letters from `stdin`
+# yes, ik i can just `tr [a-z] [A-Z]` but i need to test `fltr`
+
+
+import sys
+
+
+if sys.stdin.isatty(): sys.exit(1)
+
+
+out = ''
+for line in sys.stdin:
+    out += line.upper()
+print(out.rstrip(), file = sys.stdout)
