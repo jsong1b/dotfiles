@@ -10,10 +10,10 @@ if test -d ~/.scripts
 end
 
 # coreutil aliases
-alias ll   "ls -l"
-alias la   "ls -lA"
-alias ls   "ls -lA"
-alias l    "ls -lA"
+alias ll   "ls -lXF"
+alias la   "ls -lAXF"
+alias ls   "ls -lAXF"
+alias l    "ls -lAXF"
 alias rm   "rm -ri"
 alias rmff "rm -rf"
 alias cp   "cp -ri"
