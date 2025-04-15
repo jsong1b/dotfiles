@@ -12,6 +12,7 @@ end
 # coreutil aliases
 alias ll   "ls -l"
 alias la   "ls -lA"
+alias ls   "ls -lA"
 alias l    "ls -lA"
 alias rm   "rm -ri"
 alias rmff "rm -rf"
