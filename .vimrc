@@ -11,10 +11,11 @@ set noswapfile
 set nowb
 set nobackup
 set autoread
+au CursorHold,CursorHoldI * checktime
 
 " smart search
 set smartcase
-set hlsearch
+set nohlsearch
 set incsearch
 
 " tab settings
