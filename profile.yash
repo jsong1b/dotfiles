@@ -1,0 +1,4 @@
+#!/usr/bin/env yash
+# link to ~/.config/yash/profile
+
+export PATH=$PATH:$HOME/.local/bin

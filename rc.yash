@@ -1,0 +1,49 @@
+#!/usr/bin/env yash
+# link to ~/.config/yash/rc
+
+set --brace-expand
+set --extended-glob
+set --no-clobber
+set --no-unset
+
+if command --identify --builtin-command bindkey >/dev/null; then
+  set --notify-le
+  set --le-no-conv-meta
+  set --le-predict
+  set --vi
+
+  bindkey --vi-insert '\^A' beginning-of-line
+  bindkey --vi-insert '\^B' backward-char
+  bindkey --vi-insert '\^D' eof-or-delete
+  bindkey --vi-insert '\#'  eof-or-delete
+  bindkey --vi-insert '\^E' end-of-line
+  bindkey --vi-insert '\^F' forward-char
+  bindkey --vi-insert '\^K' forward-kill-line
+  bindkey --vi-insert '\^N' beginning-search-forward
+  bindkey --vi-insert '\^O' clear-candidates
+  bindkey --vi-insert '\^P' beginning-search-backward
+  bindkey --vi-insert '\^U' backward-kill-line
+  bindkey --vi-insert '\$'  backward-kill-line
+  bindkey --vi-insert '\^W' backward-delete-viword
+  bindkey --vi-insert '\^Y' put-left
+  bindkey --vi-insert '\N' complete-next-column
+  bindkey --vi-insert '\P' complete-prev-column
+  bindkey --vi-command '\^N' beginning-search-forward
+  bindkey --vi-command '\^P' beginning-search-backward
+  bindkey --vi-insert '\^J' accept-prediction
+fi
+
+if ! [ "${HISTFILE-}" ]; then
+    HISTFILE=${XDG_STATE_HOME:-~/.local/state}/yash/history
+
+    if [ -f ~/.yash_history ]; then
+        printf 'Note: The default history file location has been changed to "%s".\n' "$HISTFILE" >&2
+        HISTFILE=~/.yash_history
+        printf 'Please consider moving the existing file from the current location "%s".\n' "$HISTFILE" >&2
+    fi
+fi
+! [ -d "${HISTFILE%/*}" ] && mkdir -p "${HISTFILE%/*}"
+HISTSIZE=5000
+
+YASH_PS1='\fo.\fu.[${LOGNAME}@${HOSTNAME%%.*}] ${${PWD:/$HOME/\~}/#$HOME\//\~\/}\fD.\fo.\n$? \$ '
+YASH_PS1P='\fi.'
