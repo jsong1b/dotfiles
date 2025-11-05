@@ -2,10 +2,37 @@
   "files": [
     {
       "deps": null,
-      "hexdigest": "6667aac20fb29d21a01972ec23a5b84e2031197829039aef9f346dc319d1ef4b",
-      "modified": "2025-11-04T20:34:49.725489",
+      "hexdigest": "272a2dcd896c01993bef7838a324f2de9524c513d32423123d26a17a3e36a055",
+      "modified": "2025-11-05T10:38:42.566400",
       "path": "README.md",
-      "size": 1124
+      "size": 2094
+    },
+    {
+      "deps": [
+        "README.md"
+      ],
+      "hexdigest": "e006ec46af1825e73851380594586ca141d8bf0cdeb11f23c71e9d879a24339a",
+      "modified": "2025-11-05T10:02:39.917635",
+      "path": "aliases.sh",
+      "size": 215
+    },
+    {
+      "deps": [
+        "README.md"
+      ],
+      "hexdigest": "71be8a872fc1207b50f072254b8ad85edd0e24d4a19a7d5dcd322023b4d8d9f5",
+      "modified": "2025-11-05T09:17:47.473974",
+      "path": "envvars.sh",
+      "size": 163
+    },
+    {
+      "deps": [
+        "README.md"
+      ],
+      "hexdigest": "d32da75744bbd6a195ac50171a1fc822c42502f243f745059087b83982c73591",
+      "modified": "2025-11-05T09:40:44.524123",
+      "path": "prompt.sh",
+      "size": 472
     },
     {
       "deps": [
@@ -19,6 +46,9 @@
   ],
   "source": [],
   "target": [
+    "aliases.sh",
+    "envvars.sh",
+    "prompt.sh",
     "vimrc"
   ],
   "version": "2.2.1"

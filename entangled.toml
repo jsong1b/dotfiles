@@ -1,4 +1,4 @@
-version = "2.0"            
+version = "2.0"
 watch_list = ["**/*.md"]
 
 [[languages]]
@@ -9,4 +9,9 @@ comment = { open = "\"" }
 [[languages]]
 name = "Tmux"
 identifiers = ["tmux"]
+comment = { open = "#" }
+
+[[languages]]
+name = "Shell"
+identifiers = ["sh"]
 comment = { open = "#" }
