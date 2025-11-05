@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "deps": null,
+      "hexdigest": "6667aac20fb29d21a01972ec23a5b84e2031197829039aef9f346dc319d1ef4b",
+      "modified": "2025-11-04T20:34:49.725489",
+      "path": "README.md",
+      "size": 1124
+    },
+    {
+      "deps": [
+        "README.md"
+      ],
+      "hexdigest": "077e11bae4b72811060f2fef9f3fac045b811ae0b282e14caf576ea38069b0c3",
+      "modified": "2025-11-04T20:34:49.870440",
+      "path": "vimrc",
+      "size": 733
+    }
+  ],
+  "source": [],
+  "target": [
+    "vimrc"
+  ],
+  "version": "2.2.1"
+}

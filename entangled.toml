@@ -1,0 +1,12 @@
+version = "2.0"            
+watch_list = ["**/*.md"]
+
+[[languages]]
+name = "VimScript"
+identifiers = ["vim"]
+comment = { open = "\"" }
+
+[[languages]]
+name = "Tmux"
+identifiers = ["tmux"]
+comment = { open = "#" }
