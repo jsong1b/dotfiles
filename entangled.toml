@@ -15,3 +15,8 @@ comment = { open = "#" }
 name = "Shell"
 identifiers = ["sh"]
 comment = { open = "#" }
+
+[[languages]]
+name = "Ghostty"
+identifiers = ["ghostty"]
+comment = { open = "#" }
